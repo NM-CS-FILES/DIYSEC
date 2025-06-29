@@ -1,0 +1,3 @@
+/home/nathan/diy-sec/server/CMakeFiles/server.dir
+/home/nathan/diy-sec/server/CMakeFiles/edit_cache.dir
+/home/nathan/diy-sec/server/CMakeFiles/rebuild_cache.dir
