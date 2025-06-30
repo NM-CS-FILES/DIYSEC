@@ -17,6 +17,7 @@ set(OLD_GLOB
   "/home/nathan/diy-sec/server/build/../include/api.hpp"
   "/home/nathan/diy-sec/server/build/../include/auth.hpp"
   "/home/nathan/diy-sec/server/build/../include/camera.hpp"
+  "/home/nathan/diy-sec/server/build/../include/clientmanager.hpp"
   "/home/nathan/diy-sec/server/build/../include/database.hpp"
   "/home/nathan/diy-sec/server/build/../include/uuid.hpp"
   )

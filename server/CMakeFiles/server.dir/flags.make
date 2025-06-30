@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DASIO_NO_DEPRECATED -DASIO_STANDALONE -DSQLITE_ENABLE_COLUMN_METADATA
 
-CXX_INCLUDES = -I/home/nathan/diy-sec/server/build/../include/api.hpp -I/home/nathan/diy-sec/server/build/../include/auth.hpp -I/home/nathan/diy-sec/server/build/../include/camera.hpp -I/home/nathan/diy-sec/server/build/../include/database.hpp -I/home/nathan/diy-sec/server/build/../include/uuid.hpp
+CXX_INCLUDES = -I/home/nathan/diy-sec/server/build/../include/api.hpp -I/home/nathan/diy-sec/server/build/../include/auth.hpp -I/home/nathan/diy-sec/server/build/../include/camera.hpp -I/home/nathan/diy-sec/server/build/../include/clientmanager.hpp -I/home/nathan/diy-sec/server/build/../include/database.hpp -I/home/nathan/diy-sec/server/build/../include/uuid.hpp
 
 CXX_FLAGS = -std=gnu++17
 

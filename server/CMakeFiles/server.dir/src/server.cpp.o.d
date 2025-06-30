@@ -860,7 +860,7 @@ CMakeFiles/server.dir/src/server.cpp.o: \
  /usr/include/SQLiteCpp/Utils.h /usr/include/SQLiteCpp/SQLiteCpp.h \
  /usr/include/SQLiteCpp/Assertion.h /usr/include/SQLiteCpp/Transaction.h \
  /home/nathan/diy-sec/server/src/../include/api.hpp \
- /usr/include/fmt/core.h \
- /home/nathan/diy-sec/server/src/../include/auth.hpp \
  /usr/include/c++/13/list /usr/include/c++/13/bits/stl_list.h \
- /usr/include/c++/13/bits/list.tcc
+ /usr/include/c++/13/bits/list.tcc /usr/include/fmt/core.h \
+ /home/nathan/diy-sec/server/src/../include/auth.hpp \
+ /home/nathan/diy-sec/server/src/../include/camera.hpp

@@ -4,10 +4,12 @@
 #include <crow/logging.h>
 #include <ctime>
 #include <unordered_map>
+#include <list>
 #include <tuple>
 #include <fmt/core.h>
 #include "auth.hpp"
 #include "database.hpp"
+#include "camera.hpp"
 
 #pragma once
 
@@ -15,7 +17,7 @@ class API {
 public:
 
     static crow::SimpleApp _restful_app;
-
+    static std::list<crow::websocket::connection*> _streamers;
     static bool _is_initd;
 
 public:
@@ -37,7 +39,9 @@ public:
     //  GET handlers
     //
 
-    static crow::response cameras();
+    static crow::response cameras(
+        const crow::request& req
+    );
 
     //
     //  POST handlers

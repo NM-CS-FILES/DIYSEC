@@ -856,13 +856,14 @@ CMakeFiles/server.dir/src/api.cpp.o: \
  /usr/local/include/crow/compression.h \
  /usr/local/include/crow/http_server.h /usr/local/include/crow/version.h \
  /usr/local/include/crow/app.h /usr/include/c++/13/thread \
- /usr/include/c++/13/bits/this_thread_sleep.h /usr/include/fmt/core.h \
+ /usr/include/c++/13/bits/this_thread_sleep.h /usr/include/c++/13/list \
+ /usr/include/c++/13/bits/stl_list.h /usr/include/c++/13/bits/list.tcc \
+ /usr/include/fmt/core.h \
  /home/nathan/diy-sec/server/src/../include/auth.hpp \
- /usr/include/c++/13/list /usr/include/c++/13/bits/stl_list.h \
- /usr/include/c++/13/bits/list.tcc \
  /home/nathan/diy-sec/server/src/../include/database.hpp \
  /usr/include/SQLiteCpp/Database.h \
  /usr/include/SQLiteCpp/SQLiteCppExport.h /usr/include/SQLiteCpp/Column.h \
  /usr/include/SQLiteCpp/Statement.h /usr/include/SQLiteCpp/Exception.h \
  /usr/include/SQLiteCpp/Utils.h /usr/include/SQLiteCpp/SQLiteCpp.h \
- /usr/include/SQLiteCpp/Assertion.h /usr/include/SQLiteCpp/Transaction.h
+ /usr/include/SQLiteCpp/Assertion.h /usr/include/SQLiteCpp/Transaction.h \
+ /home/nathan/diy-sec/server/src/../include/camera.hpp

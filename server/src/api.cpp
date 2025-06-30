@@ -8,15 +8,47 @@
 //
 
 crow::SimpleApp API::_restful_app;
+std::list<crow::websocket::connection*> API::_streamers;
 
 //
 //
 //
 
 void API::initialize() {
-    _restful_app.port(8080);
+    _restful_app.port(8888);
+
+    // Websocket routes
+    CROW_ROUTE(_restful_app, "/stream/<int>")
+        .websocket(&_restful_app)
+        .onopen([&](crow::websocket::connection& conn){
+            CROW_LOG_INFO << "Client Connected";
+            _streamers.push_back(&conn);
+        });
+
+    CROW_ROUTE(_restful_app, "/camera/<int>")
+        .websocket(&_restful_app)
+        .onopen([&](crow::websocket::connection& conn) {
+            CROW_LOG_INFO << "Camera Connected";
+            //conn.userdata(CameraManager::get_camera(id));
+        })
+        .onmessage([&](crow::websocket::connection& conn, const std::string& data, bool is_binary) {
+            if (!is_binary) {
+                return;
+            }
+
+            CROW_LOG_INFO << "Camera Frame Sent";
+
+            for(auto c : _streamers) {
+                c->send_binary(data);
+            }
+
+            // Camera* cam = (Camera*)conn.userdata();
+            // cam->update_frame(data.begin(), data.end());
+        });
+        
 
     // GET routes
+    CROW_ROUTE(_restful_app, "/cameras")(cameras);
 
     // POST routes
     CROW_ROUTE(_restful_app, "/login").methods("POST"_method)(login);
@@ -35,12 +67,20 @@ crow::response API::error(
 //  GET handlers
 //
 
-crow::response API::cameras() {
-    // if (!Auth::is_token_valid(/*token*/)) {
+crow::response API::cameras(
+    const crow::request& req
+) {
+    // auto iter = req.headers.find("Authorization");
+
+    // if (iter == req.headers.end() || !Auth::is_token_valid(iter->second)) {
     //     return error(crow::status::UNAUTHORIZED, "Invalid Token");
     // }
 
-    return crow::response(crow::status::BAD_REQUEST);
+    return crow::json::wvalue({
+        { "camera_ids", crow::json::wvalue::list({ 1 }) } 
+    });
+
+    //return crow::response(crow::status::BAD_REQUEST);
 }
 
 //
