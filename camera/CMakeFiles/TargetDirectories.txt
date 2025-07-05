@@ -1,3 +1,0 @@
-/home/nathan/diy-sec/camera/CMakeFiles/camera.dir
-/home/nathan/diy-sec/camera/CMakeFiles/edit_cache.dir
-/home/nathan/diy-sec/camera/CMakeFiles/rebuild_cache.dir

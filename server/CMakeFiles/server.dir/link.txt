@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/server.dir/src/api.cpp.o CMakeFiles/server.dir/src/auth.cpp.o CMakeFiles/server.dir/src/camera.cpp.o CMakeFiles/server.dir/src/database.cpp.o CMakeFiles/server.dir/src/server.cpp.o CMakeFiles/server.dir/src/uuid.cpp.o -o server  /usr/lib/x86_64-linux-gnu/libSQLiteCpp.a -lfmt /usr/lib/x86_64-linux-gnu/libsqlite3.so -ldl 

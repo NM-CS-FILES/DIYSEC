@@ -1,0 +1,4 @@
+/home/nmorris/Projects/DIYSEC/backend/build/CMakeFiles/camera.dir
+/home/nmorris/Projects/DIYSEC/backend/build/CMakeFiles/server.dir
+/home/nmorris/Projects/DIYSEC/backend/build/CMakeFiles/edit_cache.dir
+/home/nmorris/Projects/DIYSEC/backend/build/CMakeFiles/rebuild_cache.dir
