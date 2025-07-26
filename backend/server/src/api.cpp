@@ -85,15 +85,12 @@ void API::stream_onmessage(
 
     const Message* pmsg = reinterpret_cast<const Message*>(data.data());
 
-    if (pmsg->type != MSG_TYPE_AUTH) {
+    if (!pmsg->is_auth()) {
         CROW_LOG_ERROR << "Recieved Non Auth Message";
         return;
     }
 
-    std::string token(
-        pmsg->data.auth_msg.token,
-        pmsg->data.auth_msg.token_len 
-    );
+    std::string token( pmsg->auth()->token );
 
     if (!Auth::is_token_valid(token)) {
         // TODO: tell streamer they're unauthorized
@@ -129,16 +126,20 @@ void API::camera_onmessage(
         return;
     }
 
-    const FrameMessage* pmsg = reinterpret_cast<const FrameMessage*>(data.data());
+    const Message* pmsg = reinterpret_cast<const Message*>(data.data());
 
-    Camera* pcam = CameraManager::get_camera(pmsg->camera_id);
+    if (!pmsg->is_frame()) {
+        CROW_LOG_ERROR << "Recieved Non Frame Camera Message";
+    }
+
+    Camera* pcam = CameraManager::get_camera(pmsg->frame()->camera_id);
 
     if (pcam == nullptr) {
-        CROW_LOG_ERROR << "Recieved Camera Message For Nonexistant Camera Id: " << pmsg->camera_id;
+        CROW_LOG_ERROR << "Recieved Camera Message For Nonexistant Camera Id: " << pmsg->frame()->camera_id;
         return;
     }
 
-    pcam->update_frame(pmsg->frame, pmsg->frame + pmsg->frame_len);
+    pcam->update_frame(pmsg->frame()->frame.begin(), pmsg->frame()->frame.end());
 
     for (auto entry : _streamers) {
         // is authorized

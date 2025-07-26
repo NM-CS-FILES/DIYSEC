@@ -185,22 +185,22 @@ bool Message::deserialize(
     const std::string& in,
     Message& out
 ) {
-    rapidjson::Document doc;
-    doc.Parse(in.c_str());
+    using namespace nlohmann;
 
-    if (doc.HasParseError() || !doc.HasMember("type") 
-        || !doc.HasMember("data") || !doc["type"].IsString()) {
+    json doc = json::parse(in);
+
+    if (!doc.contains("type") || !doc.contains("data") || !doc["type"].is_string()) {
         return false;
     }
 
-    std::string type = doc["type"].GetString();
+    std::string type = doc["type"];
 
     if (type == "null") {
         out = Message(NUL);
         return true;
     }
 
-    if (!doc["data"].IsObject()) {
+    if (!doc["data"].is_object()) {
         return false;
     }
 
@@ -209,42 +209,42 @@ bool Message::deserialize(
         out = Message(NUL);
     }
     else if (type == "frame") {
-        if (!doc["data"].HasMember("camera_id") || !doc["data"].HasMember("frame")
-            || !doc["data"]["camera_id"].IsString() || !doc["data"]["frame"].IsString()) {
+        if (!doc["data"].contains("camera_id") || !doc["data"].contains("frame")
+            || !doc["data"]["camera_id"].is_string() || !doc["data"]["frame"].is_string()) {
             return false;
         }
 
         out.convert(FRAME);
-        out._data.frame->camera_id = doc["data"]["camera_id"].GetString();
-        out._data.frame->frame = doc["data"]["frame"].GetString();
+        out._data.frame->camera_id = doc["data"]["camera_id"];
+        out._data.frame->frame = doc["data"]["frame"];
     }
     else if (type == "auth") {
-        if (!doc["data"].HasMember("token") || !doc["data"]["token"].IsString()) {
+        if (!doc["data"].contains("token") || !doc["data"]["token"].is_string()) {
             return false;
         }
 
         out.convert(AUTH);
-        out._data.auth->token = doc["data"]["token"].GetString();
+        out._data.auth->token = doc["data"]["token"];
     }
     else if (type == "status") {
-        if (!doc["data"].HasMember("ok") || !doc.HasMember("error")
-            || !doc["data"]["ok"].IsBool() || !doc["data"]["error"].IsString()) {
+        if (!doc["data"].contains("ok") || !doc.contains("error")
+            || !doc["data"]["ok"].is_boolean() || !doc["data"]["error"].is_string()) {
             return false;
         }
 
         out.convert(STATUS);
-        out._data.status->ok = doc["data"]["ok"].GetBool();
-        out._data.status->error = doc["data"]["error"].GetString();
+        out._data.status->ok = doc["data"]["ok"];
+        out._data.status->error = doc["data"]["error"];
     }
     else if (type == "beacon") {
-        if (!doc["data"].HasMember("addr") || !doc["data"].HasMember("port")
-            || !doc["data"]["addr"].IsString() || !doc["data"]["port"].IsInt()) {
+        if (!doc["data"].contains("addr") || !doc["data"].contains("port")
+            || !doc["data"]["addr"].is_string() || !doc["data"]["port"].is_number_integer()) {
             return false;
         }
 
         out.convert(BEACON);
-        out._data.beacon->addr = doc["data"]["addr"].GetString();
-        out._data.beacon->port = doc["data"]["port"].GetUint();
+        out._data.beacon->addr = doc["data"]["addr"];
+        out._data.beacon->port = doc["data"]["port"];
     }
 
     return true;
@@ -254,7 +254,9 @@ bool Message::serialize(
     const Message& in,
     std::string& out
 ) {
-    rapidjson::Document doc;
+    using namespace nlohmann;
+
+    json doc;
 
     // Type
 
@@ -299,12 +301,7 @@ bool Message::serialize(
 
     // stringify DOM
 
-    rapidjson::StringBuffer buffer;
-    rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-
-    doc.Accept(writer);
-
-    out = std::string(buffer.GetString(), buffer.GetSize());
+    out = doc.dump();
 
     return true;
 }

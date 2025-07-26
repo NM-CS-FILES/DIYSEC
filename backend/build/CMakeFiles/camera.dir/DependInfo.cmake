@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/nmorris/Projects/DIYSEC/backend/camera/src/broadcaster.cpp" "CMakeFiles/camera.dir/camera/src/broadcaster.cpp.o" "gcc" "CMakeFiles/camera.dir/camera/src/broadcaster.cpp.o.d"
-  "/home/nmorris/Projects/DIYSEC/backend/camera/src/camera.cpp" "CMakeFiles/camera.dir/camera/src/camera.cpp.o" "gcc" "CMakeFiles/camera.dir/camera/src/camera.cpp.o.d"
-  "/home/nmorris/Projects/DIYSEC/backend/shared/src/message.cpp" "CMakeFiles/camera.dir/shared/src/message.cpp.o" "gcc" "CMakeFiles/camera.dir/shared/src/message.cpp.o.d"
+  "/home/nathan/DIYSEC/backend/camera/src/broadcaster.cpp" "CMakeFiles/camera.dir/camera/src/broadcaster.cpp.o" "gcc" "CMakeFiles/camera.dir/camera/src/broadcaster.cpp.o.d"
+  "/home/nathan/DIYSEC/backend/camera/src/camera.cpp" "CMakeFiles/camera.dir/camera/src/camera.cpp.o" "gcc" "CMakeFiles/camera.dir/camera/src/camera.cpp.o.d"
+  "/home/nathan/DIYSEC/backend/shared/src/message.cpp" "CMakeFiles/camera.dir/shared/src/message.cpp.o" "gcc" "CMakeFiles/camera.dir/shared/src/message.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

@@ -2,11 +2,9 @@
 #include <string>
 #include <strings.h>
 
-#include <rapidjson/document.h>
-#include <rapidjson/stringbuffer.h>
-#include <rapidjson/writer.h>
+#include <nlohmann/json.hpp>
 
-#include <opencv2/opencv.hpp>
+#include <opencv4/opencv2/opencv.hpp>
 #include <cppcodec/base64_rfc4648.hpp>
 
 #pragma once
@@ -100,6 +98,11 @@ public:
     inline const auto& auth()   const { return _data.auth;   }
     inline const auto& status() const { return _data.status; }
     inline const auto& beacon() const { return _data.beacon; }
+
+    inline auto& frame()  { return _data.frame;  }
+    inline auto& auth()   { return _data.auth;   }
+    inline auto& status() { return _data.status; }
+    inline auto& beacon() { return _data.beacon; }
 
     //
     //

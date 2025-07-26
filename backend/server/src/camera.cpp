@@ -18,6 +18,11 @@ Camera* CameraManager::get_camera(int id) {
     return iter->second.get();
 }
 
+Camera* CameraManager::get_camera(const std::string& id) {
+    int iid = strtol(id.data(), nullptr, 10);
+    return get_camera(iid);
+}   
+
 std::vector<int> CameraManager::camera_ids() {
     std::vector<int> ids;
 

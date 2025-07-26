@@ -5,6 +5,7 @@
 #include <memory>
 #include <thread>
 #include <mutex>
+#include <string>
 
 #pragma once
 
@@ -40,6 +41,8 @@ public:
     static Camera* make_camera(int id);
     
     static Camera* get_camera(int id);
+
+    static Camera* get_camera(const std::string& id);
 
     static std::vector<int> camera_ids();
 };
