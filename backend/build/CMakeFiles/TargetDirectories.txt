@@ -1,4 +1,0 @@
-/home/nathan/DIYSEC/backend/build/CMakeFiles/camera.dir
-/home/nathan/DIYSEC/backend/build/CMakeFiles/server.dir
-/home/nathan/DIYSEC/backend/build/CMakeFiles/edit_cache.dir
-/home/nathan/DIYSEC/backend/build/CMakeFiles/rebuild_cache.dir
