@@ -1,19 +1,32 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
 	import {User} from "../../lib/User";
 	import { currUser } from "../../stores/userStore";
+	
 	
   	let unPopup = $state(false);  // un = username
 	let pwPopup = $state(false);  // pw = password
 	let emPopup = $state(false);  // em = email
 	
-	let user = new User();
-	//const unsubscribe = currUser.subscribe(value => user = value);
+	//let user =  $state(null); //new User('', '', '', '');
+	let user: User | null = new User('', '', '', '');
+	const unsubscribe = currUser.subscribe(value => {user = value;}); 
+	
+	//let username = $state(user.getUsername());
+	//let password = $state(user.getPassword());
+	//let email = $state(user.getEmail());
+	let username = $state('');
+	let password = $state('');
+    let hiddenPswd = $state('');
+	let email = $state('');
+	if (user) {
+		username = user.getUsername();
+		password = user.getPassword();
+		email = user.getEmail();
+        hiddenPswd = hidePswd();
+	}
 
-	let username = $state(user.getUsername());
-	let password = $state(user.getPassword());
-	let email = $state(user.getEmail());
-
-  const changeUn = () => unPopup = !unPopup;
+  	const changeUn = () => unPopup = !unPopup;
 	const changePw = () => pwPopup = !pwPopup;
 	const changeEm = () => emPopup = !emPopup;
 	
@@ -21,9 +34,18 @@
 		user.setUsername(username);
 		user.setPassword(password) ;
 		user.setEmail(email) ;
+		currUser.set(user);
+        hiddenPswd = hidePswd();
 		// add POST methods
 		unPopup = false; pwPopup = false; emPopup = false;
 	}
+    function hidePswd() {
+        let temp = '';
+        for (let i = 0; i < password.length; ++i) {
+            temp += '*';
+        }
+        return temp;
+    }
 </script>
 
 <!-- USES SAME HEADER AS DASHBOARD AND RECORDINGS -->
@@ -84,15 +106,15 @@
 		<h2>Account Information</h2>
 	</div>
 	<div class="info-box" style="justify-content:space-between">
-		<p>Username: {user.getUsername()}</p>
+		<p>Username: {username}</p>&emsp; <!-- &emsp is used for extra spacing -->
 		<button on:click={changeUn}>Change</button>
 	</div>
 	<div class="info-box" style="justify-content:space-between">
-		<p>Password: <em>hidden</em> {user.getPassword()}</p>
+		<p>Password: {hiddenPswd}</p>&emsp;
 		<button on:click={changePw}>Change</button>
 	</div>
 	<div class="info-box" >
-		<p>Email: {user.getUsername()}</p>&emsp; <!-- &emsp is used for extra spacing -->
+		<p>Email: {email}</p>&emsp;
 		<button on:click={changeEm}>Change</button>
 	</div>
 	
@@ -103,7 +125,7 @@
     <div class="inner-popup" on:click|stopPropagation>
       <h3>Change Username</h3>
 			New Username: &emsp;
-			<input class="input-box;" bind:value={username} />
+			<input class="input-box" bind:value={username} />
 			<br>
       <button on:click={updateProfile}>Update</button>
     </div>
@@ -113,7 +135,7 @@
     <div class="inner-popup" on:click|stopPropagation>
       <h3>Change Password</h3>
 			New Password: &emsp;
-			<input type="password" class="input-box;" bind:value={password} />
+			<input type="password" class="input-box" bind:value={password} />
 			<br>
       <button on:click={updateProfile}>Update</button>
     </div>
@@ -123,7 +145,7 @@
     <div class="inner-popup" on:click|stopPropagation>
       <h3>Change Email</h3>
 			New Email: &emsp;
-			<input class="input-box;" bind:value={email} />
+			<input class="input-box" bind:value={email} />
 			<br>
       <button on:click={updateProfile}>Update</button>
     </div>

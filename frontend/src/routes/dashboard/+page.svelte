@@ -1,7 +1,8 @@
 <script>
     import DashboardGui from "./dashboardGUI.svelte";
     import Header from "../header.svelte";
+    //import { goto } from "$app/navigation";
 </script>
 
-<Header />
+<Header page={"Dashboard"}/>
 <DashboardGui />

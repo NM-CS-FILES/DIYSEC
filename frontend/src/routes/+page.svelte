@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
+    import Login from "./login.svelte"
 
     let src: string = "";
     let ws: WebSocket | null = null;
@@ -18,6 +19,8 @@
         }
     })
 </script>
+
+<Login></Login>
 
 <style>
     img {

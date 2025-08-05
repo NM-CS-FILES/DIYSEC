@@ -1,9 +1,20 @@
 <script>
+	import { goto } from "$app/navigation";
+
 	let isOpen = $state(false);
-	let page = $state("Testing");
+	let { page } = $props();
 
 	function toggleMenu() {
 		isOpen = !isOpen;
+	}
+	function changeToAccount() {
+		goto("./UserInfo")
+	}
+	function changeToDashboard() {
+		goto("./dashboard");
+	}
+	function changeToRec() {
+		goto("./Recording")
 	}
 	function logout() {
 		// NEEDS ATTENTION!
@@ -29,6 +40,7 @@
 	}
 
 	.menu {
+		width:45%;
 		position: left;
 		top: 40px;
 		right: 0;
@@ -36,11 +48,12 @@
 		border: 1px solid #ccc;
 		padding: 0.5rem;
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		z-index: 10;
 	}
 	
 	#header {
 		width: 100%;
-		height: 6%;
+		height: 7%;
 		display: flex;
 		justify-content: space-between;
 		border-bottom: 2px solid black;
@@ -48,25 +61,39 @@
 	}
 	
 	.logout {
-		padding: 10px;
+		padding: 7px;
 		position: relative;
+		margin: auto;
+	}
+	.page-link {
+		font-size: 125%;
+		cursor: pointer;
+		border-bottom: 1px solid rgba(0, 0, 0, 0.788);
+		padding: 6px;
 	}
 </style>
 
 
 <div id="header">
-	<div><button class="menu-button" onclick={toggleMenu}>
-	<div class="bar"></div><div class="bar"></div><div class="bar"></div>
-</button></div>
+	<div>
+		<button class="menu-button" onclick={toggleMenu}>
+			<div class="bar"></div><div class="bar"></div><div class="bar"></div>
+		</button>
+	</div>
 	<div><h1 style="margin: auto;">{page}</h1></div>
 	<div><button class="logout" onclick={logout}>Logout</button></div>
 </div>
 {#if isOpen}
 	<div class="menu">
-		<ul>
-			<a href="/home">Home</a><br>
-			<a href="/about">About</a><br>
-			<a href="/settings">Settings</a><br>
-		</ul>
+			<div class="page-link" onclick={changeToDashboard}>
+				Dashboard
+			</div>
+			<div class="page-link" onclick={changeToRec}>
+				Recordings
+			</div>
+			<div class="page-link" onclick={changeToAccount}>
+				Account
+			</div>
 	</div>
 {/if}
+<br><br><br>

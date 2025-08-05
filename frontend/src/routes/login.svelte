@@ -22,7 +22,7 @@
 			_user.setPassword(_pswd);
 			_user.setEmail(_email);  // blank on regular sign in... needs to be updated to read from db
 			currUser.set(_user);
-			goto("/home/mathaloo/DIYSEC/frontend/src/routes/dashboard/+page.svelte")
+			goto("./dashboard");
 		}
 	}
 	function createProfile() {
@@ -43,6 +43,8 @@
 		_username = '';	_pswd = '';	_confirm_pswd = '';
 		return true;  // should get edited for conditions
 	}
+
+	
 
     onMount(() => {
         
