@@ -10,20 +10,24 @@
 	let _confirm_pswd = $state('')
 	let _email = $state('')
 	let _login = $state(true);
-	let _user = new User('', '', '', '');
+	//let _user = new User('', '', '', '');
 	let _token = $state('');
 
 	function toggleLogin() {
 		_login = !_login;
 	}
 	function signIn() {
-		if (true) {  // CONDITION NEEDS TO BE CHANGED!!!
-			_user.setUsername(_username);
-			_user.setPassword(_pswd);
-			_user.setEmail(_email);  // blank on regular sign in... needs to be updated to read from db
-			currUser.set(_user);
+		if (true) {  // CONDITION NEEDS TO BE CHANGED!
+			// get authentication token and email
+			storeUser();
 			goto("./dashboard");
 		}
+	}
+	function storeUser() {
+		sessionStorage.setItem('username', _username);
+		sessionStorage.setItem('password', _pswd);
+		sessionStorage.setItem('email', _email);
+		sessionStorage.setItem('token', _token);
 	}
 	function createProfile() {
 		

@@ -1,30 +1,20 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+    import { onMount } from "svelte";
+	//import { goto } from "$app/navigation";
 	import {User} from "../../lib/User";
-	import { currUser } from "../../stores/userStore";
 	
 	
   	let unPopup = $state(false);  // un = username
 	let pwPopup = $state(false);  // pw = password
 	let emPopup = $state(false);  // em = email
 	
-	//let user =  $state(null); //new User('', '', '', '');
-	let user: User | null = new User('', '', '', '');
-	const unsubscribe = currUser.subscribe(value => {user = value;}); 
-	
-	//let username = $state(user.getUsername());
-	//let password = $state(user.getPassword());
-	//let email = $state(user.getEmail());
-	let username = $state('');
+	let user = new User('', '', '', '');
+    
+    let username = $state('');
 	let password = $state('');
     let hiddenPswd = $state('');
 	let email = $state('');
-	if (user) {
-		username = user.getUsername();
-		password = user.getPassword();
-		email = user.getEmail();
-        hiddenPswd = hidePswd();
-	}
+    let token = $state('');
 
   	const changeUn = () => unPopup = !unPopup;
 	const changePw = () => pwPopup = !pwPopup;
@@ -32,9 +22,9 @@
 	
 	function updateProfile() {  // updates the DB on the server
 		user.setUsername(username);
-		user.setPassword(password) ;
-		user.setEmail(email) ;
-		currUser.set(user);
+		user.setPassword(password);
+		user.setEmail(email);
+        storeUser();
         hiddenPswd = hidePswd();
 		// add POST methods
 		unPopup = false; pwPopup = false; emPopup = false;
@@ -46,9 +36,24 @@
         }
         return temp;
     }
+    function storeUser() {
+		sessionStorage.setItem('username', username);
+		sessionStorage.setItem('password', password);
+		sessionStorage.setItem('email', email);
+		sessionStorage.setItem('token', token);
+	}
+	onMount(() => {
+		user.setUsername(sessionStorage.getItem('username')!);
+    	user.setPassword(sessionStorage.getItem('password')!);
+    	user.setEmail(sessionStorage.getItem('email')!);
+    	user.setToken(sessionStorage.getItem('token')!);
+		username = user.getUsername();
+		password = user.getPassword();
+    	hiddenPswd = hidePswd();
+		email = user.getEmail();
+    	token = user.getToken();
+	})
 </script>
-
-<!-- USES SAME HEADER AS DASHBOARD AND RECORDINGS -->
 
 <style>
 	.container {

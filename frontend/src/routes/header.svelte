@@ -17,7 +17,8 @@
 		goto("./Recording")
 	}
 	function logout() {
-		// NEEDS ATTENTION!
+		sessionStorage.clear();
+		goto("./")
 	}
 </script>
 
