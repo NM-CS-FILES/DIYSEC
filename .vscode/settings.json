@@ -1,5 +1,5 @@
 {
-    "cmake.sourceDirectory": "/home/nathan/diy-sec/backend",
+    "cmake.sourceDirectory": "/home/nathan/DIYSEC/backend",
     "files.associations": {
         "unordered_map": "cpp",
         "cctype": "cpp",
@@ -78,6 +78,9 @@
         "unordered_set": "cpp",
         "text_encoding": "cpp",
         "cfenv": "cpp",
-        "stdfloat": "cpp"
+        "stdfloat": "cpp",
+        "forward_list": "cpp",
+        "ranges": "cpp",
+        "valarray": "cpp"
     }
 }

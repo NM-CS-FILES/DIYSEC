@@ -134,6 +134,16 @@ void API::camera_onmessage(
 
     Camera* pcam = CameraManager::get_camera(pmsg->frame()->camera_id);
 
+    // void API::camera_onopen(crow::websocket::connection& conn)
+
+    std::vector<std::function<std::string(std::string)>> stringVector = {
+        [&](std::string s) -> std::string {
+            return s;
+        }  
+    };
+
+    stringVector[0]("Hello, World"); // hello world
+
     if (pcam == nullptr) {
         CROW_LOG_ERROR << "Recieved Camera Message For Nonexistant Camera Id: " << pmsg->frame()->camera_id;
         return;

@@ -23,8 +23,6 @@ file(GLOB camera_inc CONFIGURE_DEPENDS "camera/include" "shared/include")
 
 add_executable(camera ${camera_src})
 
-# TODO: fix this shit, header only
-
 target_include_directories(camera PUBLIC ${camera_inc})
 target_include_directories(camera PUBLIC ${OpenCV_INCLUDE_DIRS})
 target_link_libraries(camera PRIVATE ${OpenCV_LIBS} ixwebsocket ZLIB::ZLIB nlohmann_json::nlohmann_json)

@@ -1,4 +1,4 @@
-#include <unordered_map>
+#include <unordered_set>
 #include <string>
 #include <list>
 #include <ctime>
@@ -7,15 +7,11 @@
 
 class Auth {
 
-    using token_map_t = std::unordered_map<std::string, time_t>;
+    using token_set = std::unordered_set<std::string>;
 
-    static time_t _last_prune;
-
-    static token_map_t _token_map;
+    static token_set _token_set;
 
 public:
-
-    static void prune();
 
     static std::string generate_token();
 
