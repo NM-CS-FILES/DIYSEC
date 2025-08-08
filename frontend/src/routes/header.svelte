@@ -17,6 +17,7 @@
 		goto("./Recording")
 	}
 	function logout() {
+		// end authentication and connection from server?
 		sessionStorage.clear();
 		goto("./")
 	}

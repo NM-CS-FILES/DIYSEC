@@ -1,27 +1,83 @@
 <script lang="ts">
     import { onMount } from "svelte";
-	import { currUser } from "../stores/userStore";
-    import {User} from "../lib/User";
     import { goto } from "$app/navigation";
-	
 	
 	let _username = $state('');
 	let _pswd = $state('');
 	let _confirm_pswd = $state('')
 	let _email = $state('')
 	let _login = $state(true);
-	//let _user = new User('', '', '', '');
 	let _token = $state('');
+	let _approved = $state(true);
 
-	function toggleLogin() {
-		_login = !_login;
-	}
-	function signIn() {
-		if (true) {  // CONDITION NEEDS TO BE CHANGED!
-			// get authentication token and email
-			storeUser();
-			goto("./dashboard");
+	function createProfile() {
+		let _valid_username = false;
+		let _valid_password = false;
+		let _valid_email = false;
+		if (_username.length < 6 || _username.length > 12) {
+			alert("Username must be between 6 and 12 charaters.")
 		}
+		else { _valid_username = true; }
+		if (_pswd != _confirm_pswd) {  // If Password confirmation does not match
+			alert("Password and confirmed password do not match.")
+		}
+		else { _valid_password = true; }
+		if (_email == '') {
+			alert("Email cannot be left blank.")
+		}
+		else if (!_email.includes("@") || !_email.includes(".com") || !_email.includes(".net") 
+		|| !_email.includes(".org") || !_email.includes(".edu") || !_email.includes(".gov")) {
+			alert("Must enter a valid email address.")
+		}
+		else { _valid_email = true; }
+		if (_valid_username == true && _valid_password == true && _valid_email == true) {
+			sendNewProfile();
+		}
+	}
+	async function signIn() {
+		const res = await fetch("https://localhost:8888/api/login",  {  // CHECK THAT URL IS CORRECT!!
+			method: "POST",
+			headers: {"Content-Type": "application/json"},  // Keep?
+			body: JSON.stringify({username: _username, password: _pswd})
+		});
+		if (res.ok) {  // Ok status from server
+			const data = await res.json();
+			if (data.approved == true) {  // Checks if login was approved by server
+				_email = data.email;
+				_token = data.token;  // = data.Authorization??????
+				storeUser();
+				goto("./dashboard");
+			}
+			else {
+				_username = ''; _pswd = '';
+				_approved = false;
+			}
+		}
+		else {
+			alert("Status Error: " + `${res.status}`);
+		}
+	}
+	async function sendNewProfile() {
+		// FILL IN.... (POST method for sending account to server {maybe add conditions})
+		const res = await fetch("https://localhost:8888/api/...", {  // UPDATE API URL!!
+			method: "POST",
+			headers: {"Content-Type": "application/json"},
+			body: JSON.stringify({username: _username, password: _pswd, email: _email})
+		})
+		if (res.ok) {
+			const data = await res.json();
+			if (data.approved == true) {
+				_username = '';	_pswd = '';	_confirm_pswd = '';
+				_login = true;
+			}
+			else {  // Need to add methods to stop just anyone from creating a profile!
+
+			}
+		}
+		else {
+			alert("Account not created. Status Error: " + `${res.status}`);
+		}
+		
 	}
 	function storeUser() {
 		sessionStorage.setItem('username', _username);
@@ -29,29 +85,13 @@
 		sessionStorage.setItem('email', _email);
 		sessionStorage.setItem('token', _token);
 	}
-	function createProfile() {
-		
-		if (checkPswd()) {   // keep here?
-			// FILL IN.... (POST method for sending account to server {maybe add conditions})
-			_login = true;
-		}
-		else {
-			alert("Password and confirm password do not match.")
-		}
-		
-	}
-	function checkPswd() {
-		if (_pswd != _confirm_pswd) {  // If Password confirmation does not match
-			return false;
-		}
-		_username = '';	_pswd = '';	_confirm_pswd = '';
-		return true;  // should get edited for conditions
-	}
-
 	
+	function toggleLogin() {
+		_login = !_login;
+	}
 
     onMount(() => {
-        
+        // might not need
     })
 </script>
 
@@ -73,6 +113,9 @@
 				<input type="password" bind:value={_pswd}
 					class="input-box" placeholder="Enter Password" />
 			</p>
+			{#if _approved == false}
+				<p style="color: red;">Invalid username or password</p>
+			{/if}
 			<button onclick={signIn} style="padding: 6px;">Submit</button>	
 		</div>
 		<div style="text-align: left; padding: 12px 4px">
@@ -90,6 +133,9 @@
 				<input bind:value={_username} class="input-box"
 					placeholder="Enter Username"/>
 			</p>
+			{#if _username != '' && (_username.length < 6 || _username.length > 12)}
+				<p style="color: red;">Username must be between 6 and 12 characters</p>
+			{/if}
 			<p>
 				<b>Password: </b>&ensp;
 				<input type="password" bind:value={_pswd}
@@ -108,6 +154,9 @@
 				<input bind:value={_email}
 					class="input-box" placeholder="Enter Email Address" />
 			</p>
+			{#if _email != '' && (!_email.includes("@") || !_email.includes("."))}
+				<p style="color: red;">Invalid email address</p>
+			{/if}
 			<button onclick={createProfile} style="padding: 6px;">Submit</button>
 		</div>
 	</div>

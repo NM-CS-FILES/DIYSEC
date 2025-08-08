@@ -29,4 +29,4 @@
     }
 </style>
 
-<img {src} alt = "ALTERNATE"/>
+<img {src} alt = "No Camera Data"/>

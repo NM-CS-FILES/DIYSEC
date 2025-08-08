@@ -16,10 +16,11 @@
             src = url;
             setTimeout(() => URL.revokeObjectURL(url), 500);
         }
+        
     })
 </script>
 
-<img {src} alt = "ALTERNATE"/>
+<img {src} alt = "No Camera Data"/>
 
 <style>
     img {
