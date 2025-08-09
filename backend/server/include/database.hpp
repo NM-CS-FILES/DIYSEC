@@ -5,10 +5,6 @@
 
 class Database {
 
-    /*
-     *
-     */
-
     static const char* _sqlite_path;
     static SQLite::Database _instance;
 
@@ -22,7 +18,11 @@ public:
 
     static void initialize();
 
-    static void debug_init_users();
+    static int user_count();
+
+    static int admin_user_count();
+
+    static void add_user(const User& user);
 
     static bool get_user(
         const std::string& username,

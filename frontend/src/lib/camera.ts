@@ -1,5 +1,4 @@
 export class Camera {
-  
     id: number;
     ws: WebSocket | null;
 
@@ -7,5 +6,4 @@ export class Camera {
         this.id = id;
         this.ws = null;
     }
-
 };

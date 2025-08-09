@@ -7,7 +7,7 @@
 //
 //
 
-crow::SimpleApp API::_restful_app;
+crow::App<API::CORS> API::_restful_app;
 std::unordered_map<crow::websocket::connection*, bool> API::_streamers;
 
 //
@@ -38,6 +38,7 @@ void API::initialize() {
     // POST routes
 
     CROW_ROUTE(_restful_app, "/api/login").methods("POST"_method)(login);
+    CROW_ROUTE(_restful_app, "/api/register").methods("POST"_method)(registerr);
 }
 
 bool API::is_request_authorized(
@@ -80,8 +81,6 @@ void API::stream_onmessage(
         CROW_LOG_ERROR << "Recieved Non Binary Stream Message";
         return;
     }
-
-    // TODO: fix potential buffer overread
 
     const Message* pmsg = reinterpret_cast<const Message*>(data.data());
 
@@ -223,4 +222,38 @@ crow::response API::login(
     return crow::json::wvalue({
         { "Authorization", Auth::generate_token() }
     });
+}
+
+crow::response API::registerr(
+    const crow::request &req
+) { 
+    auto json = crow::json::load(req.body);
+
+    if (!json) {
+        return error(crow::status::BAD_REQUEST, "Invalid Json");
+    }
+
+    if (!json.has("username")) {
+        return error(crow::status::BAD_REQUEST, "Invalid Username");
+    }
+
+    if (!json.has("password")) {
+        return error(crow::status::BAD_REQUEST, "Invalid Password");
+    }
+
+    int admin_user_count = Database::admin_user_count();
+
+    if (admin_user_count != 0) {
+        return error(crow::status::UNAUTHORIZED, "Unable To Create Account");
+    }
+
+    Database::User user;
+
+    user.username = json["username"].s();
+    user.password = json["password"].s();
+    user.is_admin = 1;
+
+    Database::add_user(user);
+
+    return login(req);
 }

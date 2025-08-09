@@ -14,19 +14,37 @@ void Database::initialize() {
     _instance.exec("CREATE TABLE IF NOT EXISTS cameras (id INTEGER PRIMARY KEY, name TEXT)");
 }
 
-void Database::debug_init_users() {
-    SQLite::Statement query(_instance, "SELECT COUNT(*) FROM users WHERE username = \"admin\"");
+int Database::user_count() {
+    SQLite::Statement query(_instance, "SELECT COUNT(*) FROM users");
 
     if (!query.executeStep()) {
-        return;
+        return -1;
     }
 
-    int count = query.getColumn(0);
-
-    if (count == 0) {
-        _instance.exec("INSERT INTO users (username, password, is_admin) VALUES (\"admin\", \"password\", 1)");
-    }
+    return query.getColumn(0);
 }
+
+int Database::admin_user_count() {
+    SQLite::Statement query(_instance, "SELECT COUNT(*) FROM users WHERE is_admin = 1");
+
+    if (!query.executeStep()) {
+        return -1;
+    }
+
+    return query.getColumn(0);
+}
+
+
+void Database::add_user(const User& user) {
+    SQLite::Statement query(_instance, "INSERT INTO users (username, password, is_admin) VALUES (?, ?, ?)");
+
+    query.bind(1, user.username);
+    query.bind(2, user.password);
+    query.bind(3, user.is_admin);
+
+    query.exec();
+}
+
 
 bool Database::get_user(
     const std::string& username,

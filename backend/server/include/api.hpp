@@ -18,7 +18,26 @@
 class API {
 public: // TODO: REMOVE!!!
 
-    static crow::SimpleApp _restful_app;
+    struct CORS {
+        struct context {};
+
+        void before_handle(crow::request& req, crow::response& res, context& ctx) {
+            res.add_header("Access-Control-Allow-Origin", "*");
+            res.add_header("Access-Control-Allow-Headers", "*");
+
+            if (req.method == crow::HTTPMethod::OPTIONS) {
+                res.code = 204;
+                res.end();
+            }
+        }
+
+        void after_handle(crow::request& req, crow::response& res, context& ctx) {
+            res.add_header("Access-Control-Allow-Origin", "*");
+            res.add_header("Access-Control-Allow-Headers", "*");
+        }
+    };
+
+    static crow::App<CORS> _restful_app;
     static std::unordered_map<crow::websocket::connection*, bool> _streamers;
     static bool _is_initd;
 
@@ -84,6 +103,10 @@ public:
     //
 
     static crow::response login(
+        const crow::request& req
+    );
+
+    static crow::response registerr(
         const crow::request& req
     );
 };

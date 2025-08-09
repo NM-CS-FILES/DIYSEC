@@ -6,7 +6,6 @@
 	import { Input } from "$lib/components/ui/input/index.js";
 	import { Label } from "$lib/components/ui/label/index.js";
 
-
     import { Session } from "$lib/session";
 
 	const id = $props.id();
@@ -56,5 +55,9 @@
 			</div>
 			<Button onclick={tryLogin} type="submit" class="w-full">Login</Button>
 		</div>
+        <div class="mt-4 text-center text-sm">
+            Register?
+            <a href="/register" class="underline"> Click Here </a>
+        </div>
 	</Card.Content>
 </Card.Root>

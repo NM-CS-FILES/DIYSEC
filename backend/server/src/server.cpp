@@ -6,14 +6,10 @@
 #include "../include/database.hpp"
 #include "../include/api.hpp"
 
-
 void initialize() {
     Database::initialize();
-    Database::debug_init_users();
-
     API::initialize();
 }
-
 
 int main() {
     initialize();

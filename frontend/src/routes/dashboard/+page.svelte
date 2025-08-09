@@ -1,5 +1,14 @@
 <script lang="ts">
+    import { goto } from "$app/navigation";
     import * as Nav from "$lib/components/ui/navigation-menu/index"
+    import { Session } from "$lib/session";
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        if (!Session.isAuthenticated()) {
+            goto("/login");
+        }
+    });
 </script>
 
 <div class="nav-div">

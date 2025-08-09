@@ -7,7 +7,7 @@
 
 class Auth {
 
-    using token_set = std::unordered_set<std::string>;
+    using token_set = std::unordered_set<std::string, std::pair<User, time_t>>;
 
     static token_set _token_set;
 
